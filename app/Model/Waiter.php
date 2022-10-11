@@ -2,6 +2,10 @@
 
 class Waiter extends AppModel
 {
+    public $virtualFields = array(
+        'full_name' => 'CONCAT(Waiter.nombre, " ", Waiter.apellido)'
+    );
+
     public $validate = array (
         'dni' => array(
             'notBlank' => array(
@@ -36,7 +40,16 @@ class Waiter extends AppModel
             ),
         )
     ); //Array used to validate the data
-}
 
+    public $hasMany = array(
+        'Table' => array(
+            'className' => 'Table',
+            'foreignKey' => 'waiter_id',
+            'conditions' => '',
+            'order' => 'Table.serie DESC',
+            'depend' => false
+        )
+    );
+}
 
 ?>
